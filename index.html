@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>Triangle</title>
+</head>
+<body>
+	<div class="container">
+		<div class="main">
+			<center> <img src="img/triangle.png" width="520px" class="image">
+			<br><br>
+			<form onsubmit="return false">
+				<h3>input number</h3>
+					<table>
+					<tr>
+						<td colspan="2">Angle</td>
+					</tr>
+					<tr>
+						<td>a</td>
+						<td><input type="text" name="inputA" size="4" class="in" id="input_a" autocomplete="off">&nbsp; &deg;</td>
+					</tr>
+					<tr>
+						<td>b</td>
+						<td><input type="text" name="inputB" size="4" class="in" id="input_b" autocomplete="off">&nbsp; &deg;</td>
+					</tr>
+					<tr>
+						<td>c</td>
+						<td><input type="text" name="inputC" size="4" class="in" id="input_c" autocomplete="off">&nbsp; &deg;</td>
+					</tr>
+				</table>
+				<table>
+					<tr>
+						<td colspan="2">Side</td>
+					</tr>
+					<tr>
+						<td>x</td>
+						<td><input type="text" name="inputX" size="3" class="in" id="input_x" autocomplete="off">&nbsp; cm</td>
+					</tr>
+					<tr>
+						<td>y</td>
+						<td><input type="text" name="inputY" size="3" class="in" id="input_y" autocomplete="off">&nbsp; cm</td>
+					</tr>
+					<tr>
+						<td>z</td>
+						<td><input type="text" name="inputZ" size="3" class="in" id="input_z" autocomplete="off">&nbsp; cm</td>
+					</tr>
+				
+				</table>
+				<br><br>
+				<button id="submit">Count</button>
+				<button id="clear">Clear</button></center>
+				
+				<br><br>
+				<table>
+					<tr>
+						<td colspan="2">Result</td>
+					</tr>
+					<tr> 
+						<td>Area Large</td>
+						<td> <span id="area">...</span> </td>
+					</tr>
+					<tr>
+						<td>Perimeter</td>
+						<td> <span id="perimeter">...</span></td>
+					</tr>
+					<tr>
+						<td> height x</td>
+						<td> <span id="heightX">...</span> </td>
+					</tr>
+					<tr>
+						<td> height y</td>
+						<td> <span id="heightY">...</span> </td>
+					</tr>
+					<tr>
+						<td> height z</td>
+						<td> <span id="heightZ">...</span> </td>
+					</tr>
+				</table>
+				<table>
+					
+				</table>
+			</form>
+			<p style="font-size: 23px;">
+				<span id="process"></span>
+			</p>
+			
+			<!-- &radic;<span style='border-top : 1px solid white;'>10</span> -->
+		</div>
+
+		<div class="formula">
+			<center>
+				<h3>Formula</h3>
+				<img src="img/formula.png" height="300px" class="image"><br><br>
+				<img src="img/formula2.png" height="300px" class="image"><br><br>
+				<img src="img/formula3.png" height="200px" class="image">
+			</center>
+		</div>
+
+	</div>
+	
+</body>
+<script type="text/javascript">
+document.getElementById("submit").
+addEventListener("click", count);
+
+function count() {
+	// pengambilan data/nilai input HTML untuk disimpan ke variabel JS
+	var angle_a=document.getElementById("input_a").value;
+	var angle_b=document.getElementById("input_b").value;
+	var angle_c=document.getElementById("input_c").value;
+
+	var side_x=document.getElementById("input_x").value;
+	var side_y=document.getElementById("input_y").value;
+	var side_z=document.getElementById("input_z").value;
+
+	// mengambil nilai side/angle yang bernilai serta memilih method/rumus
+
+	// method 1 (dik: 2sisi 1sudut)
+	if 		(angle_a !== "" && side_x !== "" && side_z !== ""){
+		var method = 1;
+		var angle_1 = angle_a;
+		var side_1 = side_x;
+		var side_2 = side_z;
+		var side_3 = document.getElementById("input_y");
+		var baseX = side_x;
+		var baseY = "unknown";
+		var baseZ = side_z; 
+	}
+	else if (angle_b !== "" && side_y !== ""  && side_z !== ""){
+		var method = 1;
+		var angle_1 = angle_b;
+		var side_1 = side_y;
+		var side_2 = side_z;
+		var side_3 = document.getElementById("input_x");
+		var baseX = "unknown";
+		var baseY = side_y;
+		var baseZ = side_z; 
+	}
+	else if (angle_c !== "" && side_x !== ""  && side_y !== ""){
+		var method = 1;
+		var angle_1 = angle_c;
+		var side_1 = side_x;
+		var side_2 = side_y;
+		var side_3 = document.getElementById("input_z");
+		var baseX = side_x;
+		var baseY = side_z;
+		var baseZ = "unknown";
+	}
+	// method 2 (dik: 1sisi 2sudut)
+	else if (angle_b !== "" && angle_c !== "" && side_y !== ""){
+		var method = 2;
+		var angle_1 = angle_b*1;
+		var angle_2 = angle_c*1;
+		var angle_3 = document.getElementById("input_a");
+		var side_1 = side_y;
+		var side2 = document.getElementById("input_x");
+		var side3 = document.getElementById("input_z");
+	}
+	else if (angle_a !== "" && angle_c !== "" && side_x !== ""){
+		var method = 2;
+		var angle_1 = angle_a*1;
+		var angle_2 = angle_c*1;
+		var angle_3 = document.getElementById("input_b");
+		var side_1 = side_x;
+		var side2 = document.getElementById("input_y");
+		var side3 = document.getElementById("input_z");
+	}
+	else if (angle_a !== "" && angle_b !== "" && side_z !== ""){
+		var method = 2;
+		var angle_1 = angle_a*1;
+		var angle_2 = angle_b*1;
+		var angle_3 = document.getElementById("input_c");
+		var side_1 = side_z;
+		var side2 = document.getElementById("input_y");
+		var side3 = document.getElementById("input_x");
+	}
+	// method 3 (dik: 3sisi)
+	else if (side_x !== "" && side_y !== "" && side_z !== ""){
+		var	method = 3;
+	}
+	else {var angle_1 = "error";}
+
+// rumus/method/proses hitungan
+	if 		(method == 1){
+		var step1 = Math.sin(angle_1*Math.PI/180);
+		var step2 = 0.5*side_1*side_2*step1.toFixed(4);
+		var area = step2;
+
+		// sisi yang tidak diketahui
+		var Sstep_1 = side_1*side_1+side_2*side_2;
+		var Sstep_2 = 2*side_1*side_2;
+		var Sstep_3 = Math.cos(angle_1*Math.PI/180);
+		var Sstep_4 = Sstep_1 - Sstep_2*Sstep_3;
+		var Sstep_5 = Math.sqrt(Sstep_4);
+		var unSide = Sstep_5.toFixed(4);
+		side_3.value=unSide;
+
+		// sudut yang tidak diketaui
+		if (angle_a!=="") {
+			var unAngle_1 = document.getElementById("input_b");
+			var unAngle_2 = document.getElementById("input_c");
+			var knAngle = angle_1;
+		}
+		else if (angle_b!=="") {
+			var unAngle_1 = document.getElementById("input_c");
+			var unAngle_2 = document.getElementById("input_a");
+			var knAngle = angle_1;
+		}
+		else if (angle_c!=="") {
+			var unAngle_1 = document.getElementById("input_a");
+			var unAngle_2 = document.getElementById("input_b");
+			var knAngle = angle_1;
+		}
+		var Astep_1 = side_2/unSide*Math.sin(knAngle*Math.PI/180);
+		var Astep_2 = Math.asin(Astep_1);
+		var Astep_3 = Astep_2*180/Math.PI;
+		unAngle_2.value = Astep_3;
+		unAngle_1.value = 180-Astep_3-knAngle;
+
+		// tinggi
+		if (baseX=="unknown") {baseX=unSide}
+		else if (baseY=="unknown") {baseY=unSide}
+		else if (baseZ=="unknown") {baseZ=unSide}
+		var heightX = 2*area/baseX;
+		var heightY = 2*area/baseY;
+		var heightZ = 2*area/baseZ;
+
+		// keliling
+		var perimeter = side_1*1+side_2*1+unSide*1;
+	}
+	else if (method == 2){
+		var step1 = parseInt(angle_1)+parseInt(angle_2);
+		var step2 = 180-step1;
+		var step3 = Math.sin(step2*Math.PI/180);
+		var step4 = step3.toFixed(4)*2;
+		var step5_a = Math.sin(angle_1*Math.PI/180);
+		var step5_b = Math.sin(angle_2*Math.PI/180);
+		var step6 = side_1*side_1*step5_a.toFixed(4)*step5_b.toFixed(4)/step4;
+		var area = step6;
+		// sudut yang tidak diketahui
+		angle_3.value=step2;
+		// sisi yang tidak diketahui
+		side_2 = side_1*Math.sin(angle_1*Math.PI/180)/Math.sin(step2*Math.PI/180);
+		side2.value = side_2;
+		side_3 = side_1*Math.sin(angle_2*Math.PI/180)/Math.sin(step2*Math.PI/180);
+		side3.value = side_3;
+		// tinggi
+		if (side_1==side_y) {var baseX=side_2; var baseY=side_1; var baseZ=side_3}
+		else if (side_1==side_x) {var baseX=side_1; var baseY=side_2; var baseZ=side_3}
+		else if (side_1==side_z) {var baseX=side_3; var baseY=side_2; var baseZ=side_1}
+		var heightX = 2*area/baseX;
+		var heightY = 2*area/baseY;
+		var heightZ = 2*area/baseZ;
+		
+		// keliling
+		var perimeter = side_1*1+side_2*1+side_3*1;
+	}
+	else if (method == 3) {
+		var side = side_x*1+side_y*1+side_z*1;
+		var angle = side/2;
+		var step1a = angle-side_x;
+		var step1b = angle-side_y;
+		var step1c = angle-side_z;
+		var step2  = step1a*step1b*step1c*angle
+		var step3  = Math.sqrt(step2);
+		var step4 = step3.toFixed(4);
+		var area = step4;
+		// sudut
+		var stepA1 = Math.pow(side_x, 2)+Math.pow(side_z, 2)-Math.pow(side_y, 2);
+		var stepA2 = 2*side_x*side_z;
+		var stepA3 = stepA1/stepA2;
+		var angleA = Math.acos(stepA3)*180/Math.PI;
+		document.getElementById("input_a").value = angleA;
+		var stepB1 = Math.pow(side_y, 2)+Math.pow(side_z, 2)-Math.pow(side_x, 2);
+		var stepB2 = 2*side_y*side_z;
+		var stepB3 = stepB1/stepB2;
+		var angleB = Math.acos(stepB3)*180/Math.PI;
+		document.getElementById("input_b").value = angleB;
+		var angleC = 180-angleA-angleB;
+		document.getElementById("input_c").value = angleC;
+		// tinggi
+		var heightX = 2*area/side_x;
+		var heightY = 2*area/side_y;
+		var heightZ = 2*area/side_z;
+		// keliling
+		var perimeter = side;
+	}
+
+	// proses hitungan untuk visualisasi
+	var proces0 = "<h3>Process</h3>Area <br>";
+	if (method == 1) {
+		var proces1 = "- &frac12; &bull; "+side_1+" &bull; "+side_2+" &bull; sin "+angle_1+"&deg; <br>";
+		var proces2 = "- &frac12; &bull; "+ side_1*side_2+" &bull; "+step1.toFixed(4)+" <br>";
+		var proces3 = "- "+0.5*side_1*side_2+" &bull; "+step1.toFixed(4)+" <br>";
+		var proces4 = "- "+area+" cm<sup>2</sup>";
+		var proces = proces0+proces1+proces2+proces3+proces4;
+	}
+	else if(method == 2){
+		var proces1 = "- "+side+"<sup>2</sup> &bull; sin "+angle_1+"&deg;  &bull; sin "+angle_2+"&deg; / 2 &bull; sin "+step2+"&deg;<br>";
+		var proces2 = "- "+side*side+" &bull; "+step5_a.toFixed(4)+" &bull; "+step5_b.toFixed(4)+" / 2 &bull; "+step3.toFixed(4)+"<br>";
+		var proces3 = "- "+side*side*step5_a.toFixed(4)*step5_b.toFixed(4)+" / "+step4+"<br>";
+		var proces4 = "- "+area+" cm<sup>2</sup>";
+		var proces = proces0+proces1+proces2+proces3+proces4;
+	}
+	else if (method == 3){
+		var proces1_a = "d = &frac12; ("+side_x+" + "+side_y+" + "+side_z+")<br> ";
+		var proces1_b = "d = &frac12; ("+ side +")<br>";
+		var proces1_c = "d = "+angle+"<br><br>";
+		var proces2 = "- &radic;<span style='border-top : 2px solid white;'>"+angle+" ( "+angle+" - "+side_x+" ) ( "+angle+" - "+side_y+" ) ( "+angle+" - "+side_z+" )</span> <br>";
+		var proces3 = "- &radic;<span style='border-top : 2px solid white;'>"+angle+" ( "+step1a+" ) ( "+step1b+" ) ( "+step1c+" ) </span> <br>";
+		var proces4 = "- &radic;<span style='border-top : 2px solid white;'>"+step2+" </span> <br>";
+		var proces5 = "- "+area+" cm<sup>2</sup>";
+		var proces = proces0+proces1_a+proces1_b+proces1_c+proces2+proces3+proces4+proces5;
+	}
+	
+	// area
+	document.getElementById("area").innerHTML=area+" cm<sup>2</sup>";
+	// process
+	document.getElementById("process").innerHTML=proces;
+	// perimeter
+	document.getElementById("perimeter").innerHTML=perimeter+" cm";
+	// height
+	document.getElementById("heightX").innerHTML=heightX+" cm";
+	document.getElementById("heightY").innerHTML=heightY+" cm";
+	document.getElementById("heightZ").innerHTML=heightZ+" cm";
+		
+}
+
+document.getElementById("clear").addEventListener("click", clear);
+function clear(){
+	var angle_a=document.getElementById("input_a");
+	var angle_b=document.getElementById("input_b");
+	var angle_c=document.getElementById("input_c");
+	var side_x=document.getElementById("input_x");
+	var side_y=document.getElementById("input_y");
+	var side_z=document.getElementById("input_z");
+	angle_a.value = "";
+	angle_b.value = "";
+	angle_c.value = "";
+	side_x.value = "";
+	side_y.value = "";
+	side_z.value = "";
+}
+</script>
+</html>
